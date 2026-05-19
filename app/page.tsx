@@ -1,65 +1,142 @@
 import Image from "next/image";
+import Link from "next/link";
+import { User, Mail } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{ background: "var(--brand-white)" }}
+    >
+      <div className="animate-card-in w-full max-w-100 flex flex-col items-center">
+
+        {/* Logo + name */}
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src="/logo.png"
+          alt="Intempt"
+          width={56}
+          height={56}
           priority
+          className="animate-pop-in mb-4"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+        <div className="animate-fade-up text-center mb-6" style={{ animationDelay: "0.08s" }}>
+          <h1 className="text-2xl font-bold tracking-tight" style={{ color: "var(--brand-black)" }}>
+            Create your account
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-sm mt-1" style={{ color: "var(--brand-black)", opacity: 0.5 }}>
+            Get started in seconds
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Form area */}
+        <div
+          className="animate-fade-up w-full flex flex-col gap-3"
+          style={{ animationDelay: "0.16s" }}
+        >
+          {/* Google */}
+          <button
+            className="w-full flex items-center justify-center gap-3 text-sm font-medium rounded-xl h-11 transition-all hover:bg-[#030A190A]"
+            style={{
+              border: "1.5px solid #030A191F",
+              color: "var(--brand-black)",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
+              <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908C16.658 14.211 17.64 11.903 17.64 9.205Z" fill="#4285F4"/>
+              <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853"/>
+              <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z" fill="#FBBC05"/>
+              <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+          </button>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-1">
+            <div className="flex-1 h-px" style={{ background: "#030A191A" }} />
+            <span className="text-xs font-medium" style={{ color: "var(--brand-black)", opacity: 0.4 }}>
+              or sign up with email
+            </span>
+            <div className="flex-1 h-px" style={{ background: "#030A191A" }} />
+          </div>
+
+          {/* Full name */}
+          <div>
+            <label
+              className="block text-sm font-medium mb-1.5"
+              style={{ color: "var(--brand-black)" }}
+            >
+              Full name
+            </label>
+            <div
+              className="flex items-center gap-2.5 rounded-xl px-3.5 h-11 transition-all focus-within:ring-2 focus-within:ring-[#0080FF] focus-within:border-transparent"
+              style={{ border: "1.5px solid #030A191F", background: "var(--brand-white)" }}
+            >
+              <User size={15} style={{ color: "var(--brand-black)", opacity: 0.35 }} className="shrink-0" />
+              <input
+                type="text"
+                placeholder="John Doe"
+                className="flex-1 bg-transparent text-sm outline-none"
+                style={{ color: "var(--brand-black)" }}
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div>
+            <label
+              className="block text-sm font-medium mb-1.5"
+              style={{ color: "var(--brand-black)" }}
+            >
+              Email address
+            </label>
+            <div
+              className="flex items-center gap-2.5 rounded-xl px-3.5 h-11 transition-all focus-within:ring-2 focus-within:ring-[#0080FF] focus-within:border-transparent"
+              style={{ border: "1.5px solid #030A191F", background: "var(--brand-white)" }}
+            >
+              <Mail size={15} style={{ color: "var(--brand-black)", opacity: 0.35 }} className="shrink-0" />
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="flex-1 bg-transparent text-sm outline-none"
+                style={{ color: "var(--brand-black)" }}
+              />
+            </div>
+          </div>
+
+          {/* ToS */}
+          <p className="text-xs text-center" style={{ color: "var(--brand-black)", opacity: 0.45 }}>
+            By signing up, you agree to our{" "}
+            <a href="#" className="underline font-medium" style={{ color: "#0080FF", opacity: 1 }}>
+              Terms of Service
+            </a>
+            {" "}and{" "}
+            <a href="#" className="underline font-medium" style={{ color: "#0080FF", opacity: 1 }}>
+              Privacy Policy
+            </a>
+          </p>
+
+          {/* Continue */}
+          <Link
+            href="/organization"
+            className="w-full flex items-center justify-center text-white text-sm font-semibold rounded-xl h-11 transition-all hover:brightness-110 active:scale-[0.98]"
+            style={{ background: "#0080FF" }}
           >
-            Documentation
-          </a>
+            Continue
+          </Link>
         </div>
-      </main>
+
+        {/* Sign in */}
+        <p
+          className="animate-fade-up text-sm mt-6"
+          style={{ color: "var(--brand-black)", opacity: 0.55, animationDelay: "0.28s" }}
+        >
+          Already have an account?{" "}
+          <a href="#" className="font-semibold underline" style={{ color: "#0080FF", opacity: 1 }}>
+            Sign in
+          </a>
+        </p>
+
+      </div>
     </div>
   );
 }
