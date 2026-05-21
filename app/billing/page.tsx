@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+// TODO(api): replace with GET /api/billing/plans — returns plan list with pricing, features, and seat types
 const plans = [
   {
     name: "Professional",
@@ -63,17 +64,7 @@ export default function BillingPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--brand-white)" }}>
-        <div className="relative flex items-center justify-center w-24 h-24">
-          {/* Spinning ring around logo */}
-          <div
-            className="absolute inset-0 rounded-full animate-spin"
-            style={{
-              border: "3px solid #0080FF22",
-              borderTopColor: "#0080FF",
-            }}
-          />
-          <Image src="/logo.png" alt="Intempt" width={52} height={52} priority />
-        </div>
+        <Image src="/logo.png" alt="Intempt" width={56} height={56} priority className="animate-logo-pulse" />
       </div>
     );
   }

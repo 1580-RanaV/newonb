@@ -32,6 +32,7 @@ function BrandLogo({ src, name, bg, label, dark }: {
   );
 }
 
+// TODO(api): replace with GET /api/integrations/connectors — returns available connector integrations
 const connectors = [
   { name: "HubSpot",  type: "Source",      description: "Sync contacts, companies, and deals from HubSpot CRM.",   src: logo("hubspot.com") },
   { name: "Shopify",  type: "Source",      description: "Import products, orders, and customer data from Shopify.", src: logo("shopify.com") },
@@ -40,6 +41,7 @@ const connectors = [
   { name: "Slack",    type: "Destination", description: "Get real-time notifications in your Slack workspace.",     src: logo("slack.com") },
 ];
 
+// TODO(api): replace with GET /api/integrations/sdks — returns available SDK integrations
 const sdks = [
   { name: "Web",     type: "Source", description: "Add website tracking with our JavaScript SDK.",      src: logo("js.org"),      bg: "#F7DF1E", label: "JS",  dark: true },
   { name: "iOS",     type: "Source", description: "Track events from your iOS mobile application.",     src: logo("apple.com"),   bg: null },
@@ -48,12 +50,15 @@ const sdks = [
   { name: "API",     type: "Source", description: "Direct API integration for custom implementations.", src: null,                bg: "#0080FF", label: "</>", dark: false },
 ];
 
-function ToolCard({ name, type, description, src, bg, label, dark }: {
+function ToolCard({ name, type, description, src, bg, label, dark, index }: {
   name: string; type: string; description: string;
-  src?: string | null; bg?: string | null; label?: string; dark?: boolean;
+  src?: string | null; bg?: string | null; label?: string; dark?: boolean; index?: number;
 }) {
   return (
-    <div className="group relative flex flex-col items-center gap-1.5 p-3 cursor-pointer rounded-xl transition-colors hover:bg-[#030A190A]">
+    <div
+      className="group relative flex flex-col items-center gap-1.5 p-3 cursor-pointer rounded-xl transition-colors hover:bg-[#030A190A] animate-fade-up"
+      style={{ animationDelay: `${0.16 + (index ?? 0) * 0.04}s` }}
+    >
       {/* Logo — no box */}
       <div className="w-12 h-12 flex items-center justify-center">
         <BrandLogo src={src} name={name} bg={bg} label={label} dark={dark} />
@@ -108,13 +113,13 @@ export default function IntegrationsPage() {
         </div>
 
         {/* Connectors */}
-        <div className="animate-fade-up grid grid-cols-5 gap-2 mb-8" style={{ animationDelay: "0.16s" }}>
-          {connectors.map((t) => <ToolCard key={t.name} {...t} />)}
+        <div className="grid grid-cols-5 gap-2 mb-8">
+          {connectors.map((t, i) => <ToolCard key={t.name} {...t} index={i} />)}
         </div>
 
         {/* SDKs */}
-        <div className="animate-fade-up grid grid-cols-5 gap-2" style={{ animationDelay: "0.18s" }}>
-          {sdks.map((t) => <ToolCard key={t.name} {...t} />)}
+        <div className="grid grid-cols-5 gap-2">
+          {sdks.map((t, i) => <ToolCard key={t.name} {...t} index={connectors.length + i} />)}
         </div>
 
         {/* Footer */}

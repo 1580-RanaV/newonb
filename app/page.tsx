@@ -1,8 +1,58 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import { User, Mail } from "lucide-react";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function FieldError({ msg }: { msg: string }) {
+  return (
+    <p className="text-xs font-medium mt-1.5" style={{ color: "#EF4444" }}>
+      {msg}
+    </p>
+  );
+}
+
+function inputWrapperStyle(hasError: boolean) {
+  return {
+    border: `1.5px solid ${hasError ? "#EF4444" : "#030A191F"}`,
+    background: "var(--brand-white)",
+  };
+}
+
 export default function Home() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [touched, setTouched] = useState({ name: false, email: false });
+  const [submitted, setSubmitted] = useState(false);
+
+  function nameError() {
+    if (!name.trim()) return "Full name is required.";
+    if (name.trim().length < 2) return "Name must be at least 2 characters.";
+    return "";
+  }
+
+  function emailError() {
+    if (!email.trim()) return "Email address is required.";
+    if (!EMAIL_RE.test(email.trim())) return "Enter a valid email address.";
+    return "";
+  }
+
+  const nameErr = (touched.name || submitted) ? nameError() : "";
+  const emailErr = (touched.email || submitted) ? emailError() : "";
+
+  function handleContinue(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitted(true);
+    if (!nameError() && !emailError()) {
+      localStorage.setItem("onboarding_name", name.trim());
+      router.push("/organization");
+    }
+  }
+
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4"
@@ -10,7 +60,7 @@ export default function Home() {
     >
       <div className="animate-card-in w-full max-w-100 flex flex-col items-center">
 
-        {/* Logo + name */}
+        {/* Logo */}
         <Image
           src="/logo.png"
           alt="Intempt"
@@ -19,6 +69,7 @@ export default function Home() {
           priority
           className="animate-pop-in mb-4"
         />
+
         <div className="animate-fade-up text-center mb-6" style={{ animationDelay: "0.08s" }}>
           <h1 className="text-2xl font-bold tracking-tight" style={{ color: "var(--brand-black)" }}>
             Create your account
@@ -28,18 +79,17 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Form area */}
-        <div
+        <form
+          onSubmit={handleContinue}
+          noValidate
           className="animate-fade-up w-full flex flex-col gap-3"
           style={{ animationDelay: "0.16s" }}
         >
           {/* Google */}
           <button
+            type="button"
             className="w-full flex items-center justify-center gap-3 text-sm font-medium rounded-xl h-11 transition-all hover:bg-[#030A190A]"
-            style={{
-              border: "1.5px solid #030A191F",
-              color: "var(--brand-black)",
-            }}
+            style={{ border: "1.5px solid #030A191F", color: "var(--brand-black)" }}
           >
             <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
               <path d="M17.64 9.205c0-.639-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908C16.658 14.211 17.64 11.903 17.64 9.205Z" fill="#4285F4"/>
@@ -61,46 +111,56 @@ export default function Home() {
 
           {/* Full name */}
           <div>
-            <label
-              className="block text-sm font-medium mb-1.5"
-              style={{ color: "var(--brand-black)" }}
-            >
+            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--brand-black)" }}>
               Full name
             </label>
             <div
-              className="flex items-center gap-2.5 rounded-xl px-3.5 h-11 transition-all focus-within:ring-2 focus-within:ring-[#0080FF] focus-within:border-transparent"
-              style={{ border: "1.5px solid #030A191F", background: "var(--brand-white)" }}
+              className={`flex items-center gap-2.5 rounded-xl px-3.5 h-11 transition-all focus-within:ring-2 focus-within:border-transparent ${nameErr ? "focus-within:ring-[#EF4444]" : "focus-within:ring-[#0080FF]"}`}
+              style={inputWrapperStyle(!!nameErr)}
             >
-              <User size={15} style={{ color: "var(--brand-black)", opacity: 0.35 }} className="shrink-0" />
+              <User
+                size={15}
+                className="shrink-0"
+                style={{ color: nameErr ? "#EF4444" : "var(--brand-black)", opacity: nameErr ? 0.7 : 0.35 }}
+              />
               <input
                 type="text"
                 placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onBlur={() => setTouched((t) => ({ ...t, name: true }))}
                 className="flex-1 bg-transparent text-sm outline-none"
                 style={{ color: "var(--brand-black)" }}
               />
             </div>
+            {nameErr && <FieldError msg={nameErr} />}
           </div>
 
           {/* Email */}
           <div>
-            <label
-              className="block text-sm font-medium mb-1.5"
-              style={{ color: "var(--brand-black)" }}
-            >
+            <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--brand-black)" }}>
               Email address
             </label>
             <div
-              className="flex items-center gap-2.5 rounded-xl px-3.5 h-11 transition-all focus-within:ring-2 focus-within:ring-[#0080FF] focus-within:border-transparent"
-              style={{ border: "1.5px solid #030A191F", background: "var(--brand-white)" }}
+              className={`flex items-center gap-2.5 rounded-xl px-3.5 h-11 transition-all focus-within:ring-2 focus-within:border-transparent ${emailErr ? "focus-within:ring-[#EF4444]" : "focus-within:ring-[#0080FF]"}`}
+              style={inputWrapperStyle(!!emailErr)}
             >
-              <Mail size={15} style={{ color: "var(--brand-black)", opacity: 0.35 }} className="shrink-0" />
+              <Mail
+                size={15}
+                className="shrink-0"
+                style={{ color: emailErr ? "#EF4444" : "var(--brand-black)", opacity: emailErr ? 0.7 : 0.35 }}
+              />
               <input
                 type="email"
                 placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={() => setTouched((t) => ({ ...t, email: true }))}
                 className="flex-1 bg-transparent text-sm outline-none"
                 style={{ color: "var(--brand-black)" }}
               />
             </div>
+            {emailErr && <FieldError msg={emailErr} />}
           </div>
 
           {/* ToS */}
@@ -116,14 +176,14 @@ export default function Home() {
           </p>
 
           {/* Continue */}
-          <Link
-            href="/organization"
+          <button
+            type="submit"
             className="w-full flex items-center justify-center text-white text-sm font-semibold rounded-xl h-11 transition-all hover:brightness-110 active:scale-[0.98]"
             style={{ background: "#0080FF" }}
           >
             Continue
-          </Link>
-        </div>
+          </button>
+        </form>
 
         {/* Sign in */}
         <p

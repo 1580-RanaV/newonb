@@ -57,6 +57,14 @@ body {
   animation: watermark-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
 }
 
+@keyframes logo-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1;    }
+  50%       { transform: scale(1.1); opacity: 0.82; }
+}
+.animate-logo-pulse {
+  animation: logo-pulse 1.6s ease-in-out infinite;
+}
+
 /* Chat — hide scrollbar, keep scroll behaviour */
 .chat-scroll {
   -ms-overflow-style: none;

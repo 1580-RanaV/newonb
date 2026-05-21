@@ -1,5 +1,32 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+function OutlookLogo() {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0" fill="none">
+        <rect width="18" height="18" rx="3" fill="#0078D4"/>
+        <path d="M9 4.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM5.5 9a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0Z" fill="white"/>
+        <circle cx="9" cy="9" r="2" fill="white"/>
+      </svg>
+    );
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="https://cdn.brandfetch.io/microsoft.com/icon?c=1idhE0Bg4BXpFRYkYnt"
+      alt="Outlook"
+      width={18}
+      height={18}
+      className="shrink-0 object-contain"
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 export default function ConnectEmailPage() {
   return (
@@ -33,7 +60,7 @@ export default function ConnectEmailPage() {
         >
           {/* Gmail */}
           <Link
-            href="/assistant"
+            href="/chat"
             className="w-full flex items-center justify-center gap-3 text-sm font-medium rounded-xl h-11 transition-all hover:bg-[#030A190A]"
             style={{
               border: "1.5px solid #030A191F",
@@ -60,11 +87,7 @@ export default function ConnectEmailPage() {
                 opacity: 0.35,
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0" fill="none">
-                <rect width="18" height="18" rx="3" fill="#0078D4"/>
-                <path d="M9 4.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM5.5 9a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0Z" fill="white"/>
-                <circle cx="9" cy="9" r="2" fill="white"/>
-              </svg>
+              <OutlookLogo />
               Continue with Outlook
             </button>
             <span
@@ -78,7 +101,7 @@ export default function ConnectEmailPage() {
 
         {/* Skip */}
         <Link
-          href="/assistant"
+          href="/chat"
           className="animate-fade-up text-sm font-medium mt-8 transition-opacity hover:opacity-70"
           style={{ color: "var(--brand-black)", opacity: 0.4, animationDelay: "0.28s" }}
         >
