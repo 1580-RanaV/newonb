@@ -225,15 +225,17 @@ export default function ChatPage() {
 
   const CHAR_LIMIT = 500;
 
-  function saveProfile() {
+  function saveProfile(msgId: number) {
     if (profileDraft.some((f) => f.value.length > CHAR_LIMIT)) return;
     setProfileFields(profileDraft);
     setProfileEditing(false);
+    setSelectedChips((prev) => { const next = { ...prev }; delete next[msgId]; return next; });
   }
 
-  function cancelEdit() {
+  function cancelEdit(msgId: number) {
     setProfileDraft(profileFields);
     setProfileEditing(false);
+    setSelectedChips((prev) => { const next = { ...prev }; delete next[msgId]; return next; });
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -392,14 +394,14 @@ export default function ChatPage() {
                             })}
                             <div className="flex gap-2 pt-1">
                               <button
-                                onClick={cancelEdit}
+                                onClick={() => cancelEdit(msg.id)}
                                 className="flex-1 text-xs font-medium rounded-xl h-9 transition-all hover:bg-[#030A190A]"
                                 style={{ border: "1.5px solid #030A191F", color: "var(--brand-black)" }}
                               >
                                 Cancel
                               </button>
                               <button
-                                onClick={saveProfile}
+                                onClick={() => saveProfile(msg.id)}
                                 disabled={profileDraft.some((f) => f.value.length > CHAR_LIMIT)}
                                 className="flex-1 text-xs font-semibold rounded-xl h-9 text-white transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
                                 style={{ background: "#0080FF" }}
