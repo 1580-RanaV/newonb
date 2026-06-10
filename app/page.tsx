@@ -49,7 +49,8 @@ export default function Home() {
     setSubmitted(true);
     if (!nameError() && !emailError()) {
       localStorage.setItem("onboarding_name", name.trim());
-      router.push("/organization");
+      localStorage.setItem("onboarding_email", email.trim());
+      router.push("/verify-email");
     }
   }
 
