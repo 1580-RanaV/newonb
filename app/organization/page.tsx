@@ -359,7 +359,7 @@ export default function OrganizationPage() {
           style={{ color: "var(--brand-black)", opacity: 0.55, animationDelay: "0.28s" }}
         >
           Already have an account?{" "}
-          <a href="/" className="font-semibold underline" style={{ color: "#0080FF" }}>
+          <a href="/signin" className="font-semibold underline" style={{ color: "#0080FF" }}>
             Sign in
           </a>
         </p>

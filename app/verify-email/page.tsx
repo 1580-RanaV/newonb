@@ -197,7 +197,7 @@ export default function VerifyEmailPage() {
               style={{ color: "var(--brand-black)", opacity: 0.55, animationDelay: "0.28s" }}
             >
               Already have an account?{" "}
-              <a href="#" className="font-semibold underline" style={{ color: "#0080FF", opacity: 1 }}>
+              <a href="/signin" className="font-semibold underline" style={{ color: "#0080FF", opacity: 1 }}>
                 Sign in
               </a>
             </p>
@@ -277,7 +277,7 @@ export default function VerifyEmailPage() {
               style={{ color: "var(--brand-black)", opacity: 0.55, animationDelay: "0.28s" }}
             >
               Already have an account?{" "}
-              <a href="#" className="font-semibold underline" style={{ color: "#0080FF", opacity: 1 }}>
+              <a href="/signin" className="font-semibold underline" style={{ color: "#0080FF", opacity: 1 }}>
                 Sign in
               </a>
             </p>
